@@ -9,6 +9,7 @@ from lib.utils import calculations_as_csv_response
 
 app = FastAPI()
 
+# to enable access by the frontend (as it uses a different port)
 origins = [
     "http://localhost:8080",
 ]
@@ -28,25 +29,26 @@ class InputExpression(BaseModel):
 class OutputExpression(BaseModel):
     result: str
 
-class ErrorExpression(BaseModel):
-    error: str
-
 @app.post("/process")
 def process(input_object: InputExpression) -> OutputExpression:
 
     try:
+        # process and then persist the expression
         dec_result = rpn_calculator(input_object.expression)
         str_result = str(dec_result)
 
         add_calculation(input_object.expression, str_result)
 
+        # return the value
         return OutputExpression(result=str_result)
     except ValueError as e:
+        # handle exceptions
         raise HTTPException(status_code=400, detail=str(e))
 
 @app.get("/calculations")
 def get_calculations():
-
+    # list persisted calculations
     calculations = fetch_calculations()
 
+    # construct the return object
     return calculations_as_csv_response(calculations)

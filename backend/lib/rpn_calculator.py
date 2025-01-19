@@ -5,7 +5,7 @@ from typing import List
 
 def rpn_calculator(expression: str) -> Decimal:
     """
-    Method to evaluate a Reverse Polish Notation (RPN) expression.
+    Function to evaluate a Reverse Polish Notation (RPN) expression.
 
     Args:
         expression (str): Reverse Polish notation expression.

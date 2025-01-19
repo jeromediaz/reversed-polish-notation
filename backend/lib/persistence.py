@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, DateTime, String, create_engine
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from sqlalchemy.orm import sessionmaker
 
+
 class Base(DeclarativeBase):
     pass
 
@@ -26,6 +27,13 @@ SessionLocal = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
 
 def add_calculation(expression: str, result: str):
+    """
+    Function to persist a Reverse Polish Notation expression and its result.
+
+    Args:
+        expression (str): Reverse Polish notation expression.
+        result (str): Result of the calculation.
+    """
     with SessionLocal() as session:
         calculation = Calculation(
             expression=expression,
@@ -35,6 +43,13 @@ def add_calculation(expression: str, result: str):
         session.commit()
 
 def fetch_calculations() -> Iterable[Calculation]:
+    """
+    Function to persist a list the persisted calculations.
+
+    Returns:
+        Iterable[Calculation]: Persisted calculations.
+    """
+
     with SessionLocal() as session:
         return session.query(Calculation).all()
 

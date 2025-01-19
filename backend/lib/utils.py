@@ -1,10 +1,24 @@
-import io
-from typing import Iterable
 import csv
-from lib.persistence import Calculation
+import io
+from typing import Iterable, TYPE_CHECKING
+
 from fastapi.responses import StreamingResponse
 
-def calculations_as_csv_response(calculations: Iterable[Calculation]) -> StreamingResponse:
+if TYPE_CHECKING:
+    from lib.persistence import Calculation
+
+def calculations_as_csv_response(calculations: Iterable["Calculation"]) -> StreamingResponse:
+    """
+    Function to convert a list of persisted calculations into a CSV response.
+
+    Args:
+        calculations (Iterable[Calculation): Reverse Polish notation expression.
+
+    Returns:
+        StreamingResponse: response object to be returned by a FastAPI endpoint.
+
+    """
+
     stream = io.StringIO()
 
     csv_writer = csv.writer(stream, delimiter=';')
