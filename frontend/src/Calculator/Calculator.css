@@ -1,0 +1,12 @@
+
+.result {
+    margin-top: 10px;
+}
+
+.result-label {
+    margin-right: 5px;
+}
+
+.error {
+    color: red;
+}
